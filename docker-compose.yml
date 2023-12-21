@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  django:
+    build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+    environment:
+      - DJANGO_SETTINGS_MODULE=EvalTask.EvalTask.settings
+    command: ["gunicorn", "--bind", "0.0.0.0:8000", "EvalTask.EvalTask.wsgi:application"]
+
+  redis:
+    image: "redis:latest"
+    ports:
+      - "6380:6379"
